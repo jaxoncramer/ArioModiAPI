@@ -1,0 +1,280 @@
+CREATE TABLE ArioPlatform.dbo.Businesses (
+	BusinessID bigint NOT NULL,
+	BusinessName varchar(50),
+	Address varchar(max),
+	PhoneNumber varchar(50),
+	Industry bigint,
+	Website nvarchar(max),
+	PRIMARY KEY (BusinessID)
+)
+GO
+CREATE TABLE ArioPlatform.dbo.BusinessUserJoin (
+	ID bigint NOT NULL,
+	BusinessID bigint NOT NULL,
+	UserID bigint NOT NULL,
+	RoleID bigint NOT NULL,
+	PRIMARY KEY (ID)
+)
+GO
+CREATE TABLE ArioPlatform.dbo.Labels (
+	ID bigint NOT NULL,
+	NodeComponentID bigint NOT NULL,
+	Text nvarchar(max),
+	Style nvarchar(50),
+	PRIMARY KEY (ID)
+)
+GO
+CREATE TABLE ArioPlatform.dbo.NodeComponents (
+	ID bigint NOT NULL,
+	NodeID bigint NOT NULL,
+	Type varchar(50) NOT NULL,
+	PRIMARY KEY (ID)
+)
+GO
+CREATE TABLE ArioPlatform.dbo.Nodes (
+	ID bigint NOT NULL,
+	RoleID bigint NOT NULL,
+	ParentID bigint,
+	BusinessID bigint,
+	NodeName varchar(25) NOT NULL,
+	XPosition decimal(8,6) NOT NULL,
+	YPosition decimal(8,6) NOT NULL,
+	ZPosition decimal(8,6) NOT NULL,
+	PRIMARY KEY (ID)
+)
+GO
+CREATE TABLE ArioPlatform.dbo.NodeTeamJoin (
+	ID bigint NOT NULL,
+	NodeID bigint NOT NULL,
+	TeamID bigint NOT NULL,
+	PRIMARY KEY (ID)
+)
+GO
+CREATE TABLE ArioPlatform.dbo.QRAnchorComponents (
+	ID bigint NOT NULL,
+	NodeComponentID bigint NOT NULL,
+	QRAnchorID bigint NOT NULL,
+	PRIMARY KEY (ID)
+)
+GO
+CREATE TABLE ArioPlatform.dbo.Roles (
+	RoleID bigint NOT NULL,
+	RoleName varchar(25),
+	PRIMARY KEY (RoleID)
+)
+GO
+CREATE TABLE ArioPlatform.dbo.Teams (
+	TeamID bigint NOT NULL,
+	BusinessID bigint NOT NULL,
+	TeamCreatorID bigint NOT NULL,
+	TeamName varchar(50),
+	PRIMARY KEY (TeamID)
+)
+GO
+CREATE TABLE ArioPlatform.dbo.Users (
+	UserID bigint NOT NULL,
+	FirstName varchar(50),
+	LastName varchar(50),
+	UserName varchar(50),
+	Email nvarchar(max) NOT NULL,
+	Company varchar(50),
+	Password nvarchar(50) NOT NULL,
+	PhoneNumber varchar(50),
+	Industry bigint,
+	LastModified nvarchar(50),
+	UserPhoto nvarchar(max),
+	PRIMARY KEY (UserID)
+)
+GO
+CREATE TABLE ArioPlatform.dbo.UserTeamJoin (
+	ID bigint NOT NULL,
+	UserID bigint NOT NULL,
+	TeamID bigint NOT NULL,
+	RoleID bigint NOT NULL,
+	PRIMARY KEY (ID)
+)
+GO
+INSERT INTO ArioPlatform.dbo.Businesses(BusinessID, BusinessName, Address, PhoneNumber, Industry, Website) VALUES (1, 'Ario', '54 Old Hampton Lane', '757-222-2222', 1, N'www.ario.com')
+GO
+INSERT INTO ArioPlatform.dbo.Businesses(BusinessID, BusinessName, Address, PhoneNumber, Industry, Website) VALUES (2, 'JF Alliance Group', '54 Old Hampton Lane', '757-222-2222', 1, N'www.jfalliancegroup.com')
+GO
+INSERT INTO ArioPlatform.dbo.BusinessUserJoin(ID, BusinessID, UserID, RoleID) VALUES (1, 1, 1, 2)
+GO
+INSERT INTO ArioPlatform.dbo.BusinessUserJoin(ID, BusinessID, UserID, RoleID) VALUES (2, 2, 2, 2)
+GO
+INSERT INTO ArioPlatform.dbo.BusinessUserJoin(ID, BusinessID, UserID, RoleID) VALUES (3, 1, 3, 3)
+GO
+INSERT INTO ArioPlatform.dbo.Labels(ID, NodeComponentID, Text, Style) VALUES (1, 1, N'This is the master anchor for business 1.', N'#FFFFFF')
+GO
+INSERT INTO ArioPlatform.dbo.Labels(ID, NodeComponentID, Text, Style) VALUES (2, 2, N'this is a test label node', N'#FFFFFF')
+GO
+INSERT INTO ArioPlatform.dbo.Labels(ID, NodeComponentID, Text, Style) VALUES (3, 3, N'description', N'#FFFFFF')
+GO
+INSERT INTO ArioPlatform.dbo.Labels(ID, NodeComponentID, Text, Style) VALUES (4, 4, N'description one!', N'#FFFFFF')
+GO
+INSERT INTO ArioPlatform.dbo.Labels(ID, NodeComponentID, Text, Style) VALUES (5, 5, N'description two!', N'#FFFFFF')
+GO
+INSERT INTO ArioPlatform.dbo.Labels(ID, NodeComponentID, Text, Style) VALUES (6, 6, N'description one!', N'#FFFFFF')
+GO
+INSERT INTO ArioPlatform.dbo.Labels(ID, NodeComponentID, Text, Style) VALUES (7, 7, null, null)
+GO
+INSERT INTO ArioPlatform.dbo.Labels(ID, NodeComponentID, Text, Style) VALUES (8, 8, N'andrew is awesome!', N'#FFFFFF')
+GO
+INSERT INTO ArioPlatform.dbo.Labels(ID, NodeComponentID, Text, Style) VALUES (9, 10, N'andrew is awesome!', N'#FFFFFF')
+GO
+INSERT INTO ArioPlatform.dbo.Labels(ID, NodeComponentID, Text, Style) VALUES (11, 13, N'andrew is ok!', N'#FFFFFF')
+GO
+INSERT INTO ArioPlatform.dbo.NodeComponents(ID, NodeID, Type) VALUES (1, 1, 'Label')
+GO
+INSERT INTO ArioPlatform.dbo.NodeComponents(ID, NodeID, Type) VALUES (2, 2, 'Label')
+GO
+INSERT INTO ArioPlatform.dbo.NodeComponents(ID, NodeID, Type) VALUES (3, 5, 'Label')
+GO
+INSERT INTO ArioPlatform.dbo.NodeComponents(ID, NodeID, Type) VALUES (4, 6, 'Label')
+GO
+INSERT INTO ArioPlatform.dbo.NodeComponents(ID, NodeID, Type) VALUES (5, 6, 'Label')
+GO
+INSERT INTO ArioPlatform.dbo.NodeComponents(ID, NodeID, Type) VALUES (6, 7, 'Label')
+GO
+INSERT INTO ArioPlatform.dbo.NodeComponents(ID, NodeID, Type) VALUES (7, 7, 'Label')
+GO
+INSERT INTO ArioPlatform.dbo.NodeComponents(ID, NodeID, Type) VALUES (8, 8, 'Label')
+GO
+INSERT INTO ArioPlatform.dbo.NodeComponents(ID, NodeID, Type) VALUES (9, 8, 'QRAnchor')
+GO
+INSERT INTO ArioPlatform.dbo.NodeComponents(ID, NodeID, Type) VALUES (10, 9, 'Label')
+GO
+INSERT INTO ArioPlatform.dbo.NodeComponents(ID, NodeID, Type) VALUES (11, 9, 'QRAnchor')
+GO
+INSERT INTO ArioPlatform.dbo.NodeComponents(ID, NodeID, Type) VALUES (13, 10, 'Label')
+GO
+INSERT INTO ArioPlatform.dbo.NodeComponents(ID, NodeID, Type) VALUES (14, 10, 'QRAnchor')
+GO
+INSERT INTO ArioPlatform.dbo.NodeComponents(ID, NodeID, Type) VALUES (16, 1, 'QRAnchor')
+GO
+INSERT INTO ArioPlatform.dbo.Nodes(ID, RoleID, ParentID, BusinessID, NodeName, XPosition, YPosition, ZPosition) VALUES (1, 1, 0, 0, 'origin', 2.000000, 2.000000, 2.000000)
+GO
+INSERT INTO ArioPlatform.dbo.Nodes(ID, RoleID, ParentID, BusinessID, NodeName, XPosition, YPosition, ZPosition) VALUES (2, 1, 0, 0, 'empty node 1', -2.000000, -4.000000, -8.000000)
+GO
+INSERT INTO ArioPlatform.dbo.Nodes(ID, RoleID, ParentID, BusinessID, NodeName, XPosition, YPosition, ZPosition) VALUES (5, 1, 1, 1, 'two labels', -7.000000, -7.000000, -7.000000)
+GO
+INSERT INTO ArioPlatform.dbo.Nodes(ID, RoleID, ParentID, BusinessID, NodeName, XPosition, YPosition, ZPosition) VALUES (6, 1, 1, 1, 'two labels', -7.000000, -7.000000, -7.000000)
+GO
+INSERT INTO ArioPlatform.dbo.Nodes(ID, RoleID, ParentID, BusinessID, NodeName, XPosition, YPosition, ZPosition) VALUES (7, 1, 1, 1, 'two labels', -7.000000, -7.000000, -7.000000)
+GO
+INSERT INTO ArioPlatform.dbo.Nodes(ID, RoleID, ParentID, BusinessID, NodeName, XPosition, YPosition, ZPosition) VALUES (8, 1, 1, 1, 'andrew anchor node', 0.000000, 0.000000, 0.000000)
+GO
+INSERT INTO ArioPlatform.dbo.Nodes(ID, RoleID, ParentID, BusinessID, NodeName, XPosition, YPosition, ZPosition) VALUES (9, 1, 1, 1, 'andrew anchor node', 0.000000, 0.000000, 0.000000)
+GO
+INSERT INTO ArioPlatform.dbo.Nodes(ID, RoleID, ParentID, BusinessID, NodeName, XPosition, YPosition, ZPosition) VALUES (10, 1, 1, 1, 'andrew anchor node', 0.000000, 0.000000, 0.000000)
+GO
+INSERT INTO ArioPlatform.dbo.QRAnchorComponents(ID, NodeComponentID, QRAnchorID) VALUES (1, 9, 0)
+GO
+INSERT INTO ArioPlatform.dbo.QRAnchorComponents(ID, NodeComponentID, QRAnchorID) VALUES (2, 11, 0)
+GO
+INSERT INTO ArioPlatform.dbo.QRAnchorComponents(ID, NodeComponentID, QRAnchorID) VALUES (3, 14, 1)
+GO
+INSERT INTO ArioPlatform.dbo.QRAnchorComponents(ID, NodeComponentID, QRAnchorID) VALUES (4, 16, 45)
+GO
+INSERT INTO ArioPlatform.dbo.Roles(RoleID, RoleName) VALUES (1, 'ario')
+GO
+INSERT INTO ArioPlatform.dbo.Roles(RoleID, RoleName) VALUES (2, 'superadmin')
+GO
+INSERT INTO ArioPlatform.dbo.Roles(RoleID, RoleName) VALUES (3, 'admin')
+GO
+INSERT INTO ArioPlatform.dbo.Roles(RoleID, RoleName) VALUES (4, 'author')
+GO
+INSERT INTO ArioPlatform.dbo.Roles(RoleID, RoleName) VALUES (5, 'readonly')
+GO
+INSERT INTO ArioPlatform.dbo.Roles(RoleID, RoleName) VALUES (6, 'user')
+GO
+INSERT INTO ArioPlatform.dbo.Roles(RoleID, RoleName) VALUES (7, 'invited')
+GO
+INSERT INTO ArioPlatform.dbo.Teams(TeamID, BusinessID, TeamCreatorID, TeamName) VALUES (1, 2, 2, 'Quality Assurance')
+GO
+INSERT INTO ArioPlatform.dbo.Teams(TeamID, BusinessID, TeamCreatorID, TeamName) VALUES (2, 1, 1, 'Ario Customer Support')
+GO
+INSERT INTO ArioPlatform.dbo.Users(UserID, FirstName, LastName, UserName, Email, Company, Password, PhoneNumber, Industry, LastModified, UserPhoto) VALUES (1, 'Joseph', 'Weaver', 'jweaver', N'jweaver@ario.com', 'Ario, Inc', N'password', '757-333-3333', 1, N'10/30/2017 14:45:22', null)
+GO
+INSERT INTO ArioPlatform.dbo.Users(UserID, FirstName, LastName, UserName, Email, Company, Password, PhoneNumber, Industry, LastModified, UserPhoto) VALUES (2, 'Falana', 'Dula-King', 'fdking', N'fdula-king@jfalliancegroup.com', 'JF Alliance Group', N'SuperP@$$W0rd', '757-222-2222', 1, N'10/30/2017 15:08:35', null)
+GO
+INSERT INTO ArioPlatform.dbo.Users(UserID, FirstName, LastName, UserName, Email, Company, Password, PhoneNumber, Industry, LastModified, UserPhoto) VALUES (3, 'Nathan', 'Fender', 'nfender', N'nfender@ario.com', 'Ario', N'', '757-111-1111', 1, N'10/30/2017 16:10:10', null)
+GO
+INSERT INTO ArioPlatform.dbo.UserTeamJoin(ID, UserID, TeamID, RoleID) VALUES (1, 2, 1, 4)
+GO
+INSERT INTO ArioPlatform.dbo.UserTeamJoin(ID, UserID, TeamID, RoleID) VALUES (2, 3, 2, 4)
+GO
+INSERT INTO ArioPlatform.dbo.UserTeamJoin(ID, UserID, TeamID, RoleID) VALUES (3, 1, 2, 4)
+GO
+ALTER TABLE ArioPlatform.dbo.BusinessUserJoin
+	ADD FOREIGN KEY (BusinessID) 
+	REFERENCES Businesses (BusinessID)
+GO
+
+ALTER TABLE ArioPlatform.dbo.BusinessUserJoin
+	ADD FOREIGN KEY (RoleID) 
+	REFERENCES Roles (RoleID)
+GO
+
+ALTER TABLE ArioPlatform.dbo.BusinessUserJoin
+	ADD FOREIGN KEY (UserID) 
+	REFERENCES Users (UserID)
+GO
+
+
+ALTER TABLE ArioPlatform.dbo.Labels
+	ADD FOREIGN KEY (NodeComponentID) 
+	REFERENCES NodeComponents (ID)
+GO
+
+
+ALTER TABLE ArioPlatform.dbo.NodeComponents
+	ADD FOREIGN KEY (NodeID) 
+	REFERENCES Nodes (ID)
+GO
+
+
+ALTER TABLE ArioPlatform.dbo.NodeTeamJoin
+	ADD FOREIGN KEY (NodeID) 
+	REFERENCES Nodes (ID)
+GO
+
+ALTER TABLE ArioPlatform.dbo.NodeTeamJoin
+	ADD FOREIGN KEY (TeamID) 
+	REFERENCES Teams (TeamID)
+GO
+
+
+ALTER TABLE ArioPlatform.dbo.QRAnchorComponents
+	ADD FOREIGN KEY (NodeComponentID) 
+	REFERENCES NodeComponents (ID)
+GO
+
+
+ALTER TABLE ArioPlatform.dbo.Teams
+	ADD FOREIGN KEY (BusinessID) 
+	REFERENCES Businesses (BusinessID)
+GO
+
+ALTER TABLE ArioPlatform.dbo.Teams
+	ADD FOREIGN KEY (TeamCreatorID) 
+	REFERENCES Users (UserID)
+GO
+
+
+ALTER TABLE ArioPlatform.dbo.UserTeamJoin
+	ADD FOREIGN KEY (RoleID) 
+	REFERENCES Roles (RoleID)
+GO
+
+ALTER TABLE ArioPlatform.dbo.UserTeamJoin
+	ADD FOREIGN KEY (TeamID) 
+	REFERENCES Teams (TeamID)
+GO
+
+ALTER TABLE ArioPlatform.dbo.UserTeamJoin
+	ADD FOREIGN KEY (UserID) 
+	REFERENCES Users (UserID)
+GO
+
+
